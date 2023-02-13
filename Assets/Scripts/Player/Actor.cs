@@ -6,10 +6,12 @@ using UnityEngine;
 public abstract class Actor : MonoBehaviour {
     protected CharacterController characterController;
     protected Vector3 velocity;
+    protected float currentHealth;
+    protected float currentStamina;
 
     [Header("Actor stats")]
-    [SerializeField] protected float health = 100;
-    [SerializeField] protected float stamina = 100;
+    [SerializeField] protected float maxHealth = 100;
+    [SerializeField] protected float maxStamina = 100;
 
     [Header("Actor movement values")]
     [SerializeField] protected float gravity = -9.8f;
@@ -20,7 +22,9 @@ public abstract class Actor : MonoBehaviour {
         characterController = GetComponent<CharacterController>();
     }
 
-    protected virtual void Start() { }
+    protected virtual void Start() {
+        currentHealth = maxHealth;
+    }
     
     protected virtual void Update() {
         ApplyGravity(); //Apply gravity to the actor
@@ -29,33 +33,33 @@ public abstract class Actor : MonoBehaviour {
     }
 
     //Set the actor's health
-    public void SetHealth(int _value) {
-        health = _value;
+    public virtual void SetHealth(int _value) {
+        currentHealth = _value;
     }
 
     //Make the actor take damage
-    public void TakeDamage(int _value) {
-        health -= _value;
+    public virtual void TakeDamage(int _value) {
+        currentHealth -= _value;
     }
 
     //Make the actor gain hp
-    public void Heal(int _value) {
-        health += _value;
+    public virtual void Heal(int _value) {
+        currentHealth += _value;
     }
 
     //Set the actor's stamina
-    public void SetStamina(int _value) {
-        stamina = _value;
+    public virtual void SetStamina(int _value) {
+        currentStamina = _value;
     }
 
     //Lower the actor's stamina
-    public void LowerStamina(int _value) {
-        stamina -= _value;
+    public virtual void LowerStamina(int _value) {
+        currentStamina -= _value;
     }
 
     //Increase the actor's stamina
-    public void IncreaseStamina(int _value) {
-        stamina += _value;
+    public virtual void IncreaseStamina(int _value) {
+        currentStamina += _value;
     }
 
     protected virtual void Die() { } //Kill the actor

@@ -1,33 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Player : Actor {
     private Transform cameraTransform;
     private float xRotation = 0f;
 
+    private Slider healthbar;
+    private Slider staminabar;
+
     [Header("Player camera values")]
     [SerializeField] private float sensitivity = 100;
     [SerializeField] private float cameraClamp = 85f;
 
-    //Awake gets called once before Start
     protected override void Awake() {
         base.Awake();
         cameraTransform = Camera.main.gameObject.transform;
+        healthbar = GameObject.Find("Healthbar").GetComponent<Slider>();
+        staminabar = GameObject.Find("Staminabar").GetComponent<Slider>();
     }
 
-    //Start gets called once before Update
     protected override void Start() {
         base.Start();
         LockMouse();
     }
 
-    //Update gets called every frame
     protected override void Update() {
         base.Update();
     }
 
-    //Rotate the player using the player's mouse input
+    //Rotate the actor using the player's mouse input
     protected override void RotateActor() {
         //Set the mouse values based on the mouse input multiplied by the mouse sensitivity
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
@@ -42,7 +45,7 @@ public abstract class Player : Actor {
         transform.Rotate(Vector3.up * mouseX);
     }
 
-    //Move the player character using the player's input
+    //Move the actor character using the player's input
     protected override void MoveActor() {
         //Get the x and y values from player's input
         float x = Input.GetAxis("Horizontal");
@@ -57,5 +60,36 @@ public abstract class Player : Actor {
     private void LockMouse() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    //Update the UI when the player's health or stamina gets updated
+    public override void SetHealth(int _value) {
+        base.SetHealth(_value);
+        healthbar.value = (float)currentHealth / (float)maxHealth;
+    }
+
+    public override void TakeDamage(int _value) {
+        base.TakeDamage(_value);
+        healthbar.value = (float)currentHealth / (float)maxHealth;
+    }
+
+    public override void Heal(int _value) {
+        base.Heal(_value);
+        healthbar.value = (float)currentHealth / (float)maxHealth;
+    }
+
+    public override void SetStamina(int _value) {
+        base.SetStamina(_value);
+        staminabar.value = (float)currentStamina / (float)maxStamina;
+    }
+
+    public override void LowerStamina(int _value) {
+        base.LowerStamina(_value);
+        staminabar.value = (float)currentStamina / (float)maxStamina;
+    }
+
+    public override void IncreaseStamina(int _value) {
+        base.IncreaseStamina(_value);
+        staminabar.value = (float)currentStamina / (float)maxStamina;
     }
 }
