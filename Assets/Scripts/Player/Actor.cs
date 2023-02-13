@@ -28,32 +28,32 @@ public abstract class Actor : MonoBehaviour {
         RotateActor(); //Rotate the actor, implementation may differ per actor
     }
 
-    //Set the player's health
+    //Set the actor's health
     public void SetHealth(int _value) {
-        health = 100;
+        health = _value;
     }
 
-    //Make the player take damage
+    //Make the actor take damage
     public void TakeDamage(int _value) {
         health -= _value;
     }
 
-    //Make the player gain hp
+    //Make the actor gain hp
     public void Heal(int _value) {
         health += _value;
     }
 
-    //Set the player's stamina
+    //Set the actor's stamina
     public void SetStamina(int _value) {
         stamina = _value;
     }
 
-    //Lower the player's stamina
+    //Lower the actor's stamina
     public void LowerStamina(int _value) {
         stamina -= _value;
     }
 
-    //Increase the player's stamina
+    //Increase the actor's stamina
     public void IncreaseStamina(int _value) {
         stamina += _value;
     }
