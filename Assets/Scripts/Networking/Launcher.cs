@@ -4,21 +4,24 @@ using Photon.Realtime;
 
 public class Launcher : MonoBehaviourPunCallbacks {
     [Header("Multiplayer lobby settings")]
-    [Tooltip("The version of the game. When breaking changes are made, update the version so all clients on the server will be compatible")]
     [SerializeField] private string gameVersion = "1";
-    
-    [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so a new room will be created")]
     [SerializeField] private byte maxPlayersPerRoom = 7;
+
+    [Header("Panels")]
+    [SerializeField] private GameObject controlPanel;
+    [SerializeField] private GameObject progressPanel;
 
     private void Awake() {
         PhotonNetwork.AutomaticallySyncScene = true; //Sync all scenes when the master client changes scenes.
     }
 
     private void Start() {
-        Connect();
+        ShowProgressionPanel(false);
     }
 
     public void Connect() {
+        ShowProgressionPanel(true);
+
         if (PhotonNetwork.IsConnected) PhotonNetwork.JoinRandomRoom();
         else {
             PhotonNetwork.ConnectUsingSettings();
@@ -32,6 +35,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public override void OnDisconnected(DisconnectCause cause) {
+        ShowProgressionPanel(false);
         Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
     }
 
@@ -42,5 +46,11 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedRoom() {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+    }
+
+    private void ShowProgressionPanel(bool _showProgression) {
+        if (progressPanel == null || controlPanel == null) return;
+        progressPanel.SetActive(_showProgression);
+        controlPanel.SetActive(!_showProgression);
     }
 }
