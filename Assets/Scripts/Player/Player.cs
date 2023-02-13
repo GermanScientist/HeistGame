@@ -2,44 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
-public class Player : Actor {
-    //Serialized camera values
-    [Header("Camera values")]
-    [SerializeField] private float sensitivity = 100;
-    [SerializeField] private float cameraClamp = 85f;
-    
-    //Serialized movement values
-    [Header("Movement values")]
-    [SerializeField] private float gravity = -9.8f;
-    [SerializeField] private float walkingSpeed = 15f;
-    [SerializeField] private float jumpRaycastDistance = 1.1f;
-
-    //Non-serialized private properties
+public abstract class Player : Actor {
     private Transform cameraTransform;
     private float xRotation = 0f;
-    private CharacterController characterController;
-    private Vector3 velocity;
+
+    [Header("Player camera values")]
+    [SerializeField] private float sensitivity = 100;
+    [SerializeField] private float cameraClamp = 85f;
 
     //Awake gets called once before Start
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         cameraTransform = Camera.main.gameObject.transform;
-        characterController = GetComponent<CharacterController>();
     }
 
     //Start gets called once before Update
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         LockMouse();
     }
 
     //Update gets called every frame
-    private void Update() {
-        MovePlayerCamera();
-        MovePlayer();
+    protected override void Update() {
+        base.Update();
     }
 
     //Rotate the player using the player's mouse input
-    private void MovePlayerCamera() {
+    protected override void RotateActor() {
         //Set the mouse values based on the mouse input multiplied by the mouse sensitivity
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
@@ -54,10 +43,7 @@ public class Player : Actor {
     }
 
     //Move the player character using the player's input
-    private void MovePlayer() {
-        //Reset the velocity when the player is grounded
-        if (IsGrounded() && velocity.y < 0) velocity.y = 0f;
-
+    protected override void MoveActor() {
         //Get the x and y values from player's input
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -65,16 +51,6 @@ public class Player : Actor {
         //Apply the movement direction to the player character
         Vector3 moveDirection = transform.right * x + transform.forward * y;
         characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
-
-        //Apply gravity to the player
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
-    }
-
-    //Checks whether player is grounded
-    private bool IsGrounded() {
-        //Sends a downward raycast to see whether the player is grounded
-        return (Physics.Raycast(transform.position, Vector3.down, jumpRaycastDistance));
     }
 
     //Lock the mouse to the center of the screen
