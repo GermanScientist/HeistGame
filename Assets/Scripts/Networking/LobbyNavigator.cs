@@ -2,6 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System.Collections.Generic;
 
 public class LobbyNavigator : MonoBehaviourPunCallbacks {
     [Header("Multiplayer lobby settings")]
@@ -13,6 +15,8 @@ public class LobbyNavigator : MonoBehaviourPunCallbacks {
     [SerializeField] private GameObject controlPanel;
     [SerializeField] private GameObject progressPanel;
     [SerializeField] private GameObject[] lobbyPanels;
+
+    private List<RoomInfo> roomList;
 
     private void Awake() {
         PhotonNetwork.AutomaticallySyncScene = true; //Sync all scenes when the master client changes scenes.
@@ -27,7 +31,14 @@ public class LobbyNavigator : MonoBehaviourPunCallbacks {
         for (int i = 0; i < roomCount; i++) {
             if (i > maxRooms) continue;
             SetPanelActive(lobbyPanels[i], true);
+            TextMeshProUGUI lobbyCountText = lobbyPanels[i].transform.Find("AmountOfPeopleText").GetComponent<TextMeshProUGUI>();
+            int amountOfPeopleInRoom = roomList[i].PlayerCount;
+            lobbyCountText.text = amountOfPeopleInRoom + "1/7"; 
         }
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> _roomList) {
+        roomList = _roomList;
     }
 
     public void CreateRoom() {

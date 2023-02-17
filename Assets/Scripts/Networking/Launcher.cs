@@ -34,6 +34,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
     }
 
     public override void OnConnectedToMaster() {
+        PhotonNetwork.JoinLobby();
         SceneManager.LoadScene("LobbyNavigator");
     }
 
