@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -586,9 +586,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameVersion: 1
-  maxPlayersPerRoom: 7
+  minimumToStart: 4
   controlPanel: {fileID: 185763244}
   progressPanel: {fileID: 1495246507}
+  amountOfPlayers: {fileID: 1645477273}
 --- !u!1 &1198210999
 GameObject:
   m_ObjectHideFlags: 0

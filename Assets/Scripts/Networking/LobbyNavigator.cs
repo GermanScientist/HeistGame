@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 public class LobbyNavigator : MonoBehaviourPunCallbacks {
     [Header("Multiplayer lobby settings")]
-    [SerializeField] private string gameVersion = "1";
     [SerializeField] private byte maxPlayersPerRoom = 7;
     [SerializeField] private byte maxRooms = 2;
 
@@ -24,21 +23,20 @@ public class LobbyNavigator : MonoBehaviourPunCallbacks {
 
     private void Start() {
         ShowProgressionPanel(false);
+    }
 
+    private void Update() {
+        UpdateRoomList();
+    }
+
+    private void UpdateRoomList() {
         foreach (GameObject lobbyPanel in lobbyPanels) lobbyPanel.SetActive(false);
 
         int roomCount = PhotonNetwork.CountOfRooms;
         for (int i = 0; i < roomCount; i++) {
             if (i > maxRooms) continue;
             SetPanelActive(lobbyPanels[i], true);
-            TextMeshProUGUI lobbyCountText = lobbyPanels[i].transform.Find("AmountOfPeopleText").GetComponent<TextMeshProUGUI>();
-            int amountOfPeopleInRoom = roomList[i].PlayerCount;
-            lobbyCountText.text = amountOfPeopleInRoom + "1/7"; 
         }
-    }
-
-    public override void OnRoomListUpdate(List<RoomInfo> _roomList) {
-        roomList = _roomList;
     }
 
     public void CreateRoom() {
