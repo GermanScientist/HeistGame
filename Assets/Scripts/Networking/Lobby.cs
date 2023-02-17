@@ -3,9 +3,10 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
-public class Launcher : MonoBehaviourPunCallbacks {
+public class Lobby : MonoBehaviourPunCallbacks {
     [Header("Multiplayer lobby settings")]
     [SerializeField] private string gameVersion = "1";
+    [SerializeField] private byte minimumToStart = 4;
 
     [Header("Panels")]
     [SerializeField] private GameObject controlPanel;
@@ -19,27 +20,20 @@ public class Launcher : MonoBehaviourPunCallbacks {
         ShowProgressionPanel(false);
     }
 
-    public void Connect() {
+    public void StartGame() {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (PhotonNetwork.PlayerList.Length < minimumToStart) return;
         ShowProgressionPanel(true);
 
-        if (PhotonNetwork.IsConnected) SceneManager.LoadScene("LobbyNavigator");
-        else {
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = gameVersion;
-        }
+        PhotonNetwork.LoadLevel("Game");
     }
 
-    public void Exit() {
-        Application.Quit();
+    public void Leave() {
+        PhotonNetwork.LeaveRoom();
     }
 
-    public override void OnConnectedToMaster() {
+    public override void OnLeftRoom() {
         SceneManager.LoadScene("LobbyNavigator");
-    }
-
-    public override void OnDisconnected(DisconnectCause cause) {
-        ShowProgressionPanel(false);
-        Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
     }
 
     private void ShowProgressionPanel(bool _showProgression) {

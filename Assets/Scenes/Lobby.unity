@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,8 +208,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 766532060}
-        m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
-        m_MethodName: Connect
+        m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -539,7 +539,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766532058
 GameObject:
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 766532059}
   - component: {fileID: 766532060}
   m_Layer: 0
-  m_Name: Launcher
+  m_Name: Lobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -571,7 +571,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &766532060
 MonoBehaviour:
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 766532058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1de3f46c2cfc5654381cc35429e4edc2, type: 3}
+  m_Script: {fileID: 11500000, guid: 460ad52024616be4d8ecc6b6d6c98ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameVersion: 1
@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 1253243774}
   - component: {fileID: 1253243773}
   m_Layer: 5
-  m_Name: Return Button
+  m_Name: Leave Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -750,8 +750,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 766532060}
-        m_TargetAssemblyTypeName: Launcher, Assembly-CSharp
-        m_MethodName: Connect
+        m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
+        m_MethodName: Leave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1109,7 +1109,7 @@ RectTransform:
   - {fileID: 185763245}
   - {fileID: 1495246508}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1263,7 +1263,7 @@ GameObject:
   - component: {fileID: 1633093413}
   - component: {fileID: 1633093412}
   m_Layer: 5
-  m_Name: Return Text
+  m_Name: LeaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return
+  m_text: Leave
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1881,7 +1881,7 @@ PrefabInstance:
     - target: {fileID: 6456828831010544815, guid: 097ef7571361c3449b64a8485bae8d85,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6456828831010544815, guid: 097ef7571361c3449b64a8485bae8d85,
         type: 3}
