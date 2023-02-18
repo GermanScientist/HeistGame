@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Launcher : MonoBehaviourPunCallbacks {
     [Header("Multiplayer lobby settings")]
@@ -10,6 +11,9 @@ public class Launcher : MonoBehaviourPunCallbacks {
     [Header("Panels")]
     [SerializeField] private GameObject controlPanel;
     [SerializeField] private GameObject progressPanel;
+
+    [Header("Buttons")]
+    [SerializeField] private Button connectButton;
 
     private void Awake() {
         PhotonNetwork.AutomaticallySyncScene = true; //Sync all scenes when the master client changes scenes.
@@ -29,6 +33,10 @@ public class Launcher : MonoBehaviourPunCallbacks {
         }
     }
 
+    private void DisconnectButton(Button _button) {
+        if (_button != null) connectButton.interactable = false;
+    }
+
     public void Exit() {
         Application.Quit();
     }
@@ -40,6 +48,7 @@ public class Launcher : MonoBehaviourPunCallbacks {
 
     public override void OnDisconnected(DisconnectCause cause) {
         ShowProgressionPanel(false);
+        DisconnectButton(connectButton);
         Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
     }
 
