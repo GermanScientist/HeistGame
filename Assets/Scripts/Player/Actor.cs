@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(CharacterController))]
 public abstract class Actor : MonoBehaviour {
     protected CharacterController characterController;
+    protected PhotonView photonView;
     protected Vector3 velocity;
     protected float currentHealth;
     protected float currentStamina;
@@ -18,8 +20,10 @@ public abstract class Actor : MonoBehaviour {
     [SerializeField] protected float groundDistance = 1.1f;
     [SerializeField] protected float walkingSpeed = 15f;
 
+
     protected virtual void Awake() {
         characterController = GetComponent<CharacterController>();
+        photonView = GetComponent<PhotonView>();
     }
 
     protected virtual void Start() {
@@ -35,16 +39,19 @@ public abstract class Actor : MonoBehaviour {
     //Set the actor's health
     public virtual void SetHealth(int _value) {
         currentHealth = _value;
+        if (currentHealth <= 0) Die();
     }
 
     //Make the actor take damage
     public virtual void TakeDamage(int _value) {
         currentHealth -= _value;
+        if (currentHealth <= 0) Die();
     }
 
     //Make the actor gain hp
     public virtual void Heal(int _value) {
         currentHealth += _value;
+        if (currentHealth <= 0) Die();
     }
 
     //Set the actor's stamina
