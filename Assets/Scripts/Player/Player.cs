@@ -81,6 +81,7 @@ public abstract class Player : Actor {
     }
 
     //Update the UI when the player's health or stamina gets updated
+    [PunRPC]
     public override void SetHealth(int _value) {
         if (!photonView.IsMine) return;
 
@@ -88,6 +89,7 @@ public abstract class Player : Actor {
         healthbar.value = (float)currentHealth / (float)maxHealth;
     }
 
+    [PunRPC]
     public override void TakeDamage(int _value) {
         if (!photonView.IsMine) return;
 
@@ -95,6 +97,7 @@ public abstract class Player : Actor {
         healthbar.value = (float)currentHealth / (float)maxHealth;
     }
 
+    [PunRPC]
     public override void Heal(int _value) {
         if (!photonView.IsMine) return;
 
@@ -102,6 +105,7 @@ public abstract class Player : Actor {
         healthbar.value = (float)currentHealth / (float)maxHealth;
     }
 
+    [PunRPC]
     public override void SetStamina(int _value) {
         if (!photonView.IsMine) return;
 
@@ -109,6 +113,7 @@ public abstract class Player : Actor {
         staminabar.value = (float)currentStamina / (float)maxStamina;
     }
 
+    [PunRPC]
     public override void LowerStamina(int _value) {
         if (!photonView.IsMine) return;
 
@@ -116,6 +121,7 @@ public abstract class Player : Actor {
         staminabar.value = (float)currentStamina / (float)maxStamina;
     }
 
+    [PunRPC]
     public override void IncreaseStamina(int _value) {
         if (!photonView.IsMine) return;
 

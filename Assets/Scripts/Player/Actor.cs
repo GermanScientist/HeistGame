@@ -37,34 +37,40 @@ public abstract class Actor : MonoBehaviour {
     }
 
     //Set the actor's health
+    [PunRPC]
     public virtual void SetHealth(int _value) {
         currentHealth = _value;
         if (currentHealth <= 0) Die();
     }
 
     //Make the actor take damage
+    [PunRPC]
     public virtual void TakeDamage(int _value) {
         currentHealth -= _value;
         if (currentHealth <= 0) Die();
     }
 
     //Make the actor gain hp
+    [PunRPC]
     public virtual void Heal(int _value) {
         currentHealth += _value;
         if (currentHealth <= 0) Die();
     }
 
     //Set the actor's stamina
+    [PunRPC]
     public virtual void SetStamina(int _value) {
         currentStamina = _value;
     }
 
     //Lower the actor's stamina
+    [PunRPC]
     public virtual void LowerStamina(int _value) {
         currentStamina -= _value;
     }
 
     //Increase the actor's stamina
+    [PunRPC]
     public virtual void IncreaseStamina(int _value) {
         currentStamina += _value;
     }
