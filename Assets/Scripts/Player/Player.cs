@@ -141,8 +141,7 @@ public abstract class Player : Actor {
         if (!photonView.IsMine) return;
         UnlockMouse();
 
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene("LobbyNavigator");
+        GameObject.Find("Game Manager").GetComponent<GameManager>().LeaveRoom();
     }
 
     [PunRPC]
