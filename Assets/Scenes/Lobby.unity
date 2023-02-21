@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460ad52024616be4d8ecc6b6d6c98ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumToStart: 4
+  minimumToStart: 1
   controlPanel: {fileID: 185763244}
   progressPanel: {fileID: 1495246507}
   amountOfPlayers: {fileID: 1645477273}

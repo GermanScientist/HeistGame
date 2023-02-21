@@ -36,6 +36,7 @@ public abstract class Player : Actor {
         base.Update();
 
         if (Input.GetKeyDown(KeyCode.K)) TakeDamage(10);
+        if (Input.GetMouseButtonDown(0)) HitPlayer();
     }
 
     //Rotate the actor using the player's mouse input
@@ -134,5 +135,22 @@ public abstract class Player : Actor {
         Debug.Log("died");
         PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("LobbyNavigator");
+    }
+
+    [PunRPC]
+    protected virtual void HitPlayer() {
+        if (!photonView.IsMine) return;
+
+        Debug.DrawRay(cameraContainerTransform.position, cameraContainerTransform.forward);
+
+        RaycastHit hit;
+        if (Physics.Raycast(cameraContainerTransform.position, cameraContainerTransform.forward, out hit, 100)) {
+            GameObject target = hit.transform.gameObject;
+            
+            if (target.tag == "Player") {
+                if(target.GetPhotonView() != null) target.GetPhotonView().RPC("TakeDamage", RpcTarget.All, 10);
+            }
+            Debug.Log(hit.transform.name);
+        }
     }
 }
