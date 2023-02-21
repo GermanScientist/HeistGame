@@ -141,6 +141,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -7850305162658346787}
+  - {fileID: 8527348507655468965}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -227,6 +228,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GuardPlayerModel
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 05a7f45a739ec884494605a676e3807a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0b2eca0838d911044a43f387f191e022, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05a7f45a739ec884494605a676e3807a, type: 3}
 --- !u!4 &6110517098999831167 stripped
@@ -235,3 +241,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6000575432689761684}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6883534609215488197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 05a7f45a739ec884494605a676e3807a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6000575432689761684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8527348507655468965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6883534609215488197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
