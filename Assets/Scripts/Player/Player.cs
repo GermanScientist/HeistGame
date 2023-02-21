@@ -81,6 +81,13 @@ public abstract class Player : Actor {
         Cursor.visible = false;
     }
 
+    private void UnlockMouse() {
+        if (!photonView.IsMine) return;
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
     //Update the UI when the player's health or stamina gets updated
     [PunRPC]
     public override void SetHealth(int _value) {
@@ -132,7 +139,8 @@ public abstract class Player : Actor {
 
     protected override void Die() {
         if (!photonView.IsMine) return;
-        Debug.Log("died");
+        UnlockMouse();
+
         PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("LobbyNavigator");
     }
