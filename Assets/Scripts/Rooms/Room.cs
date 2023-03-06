@@ -16,23 +16,24 @@ public class Room : MonoBehaviour {
     }
 
     public void OnTriggerEnter(Collider _other) {
-        Debug.Log("Entered room with type: " + roomType);
         Player player = _other.GetComponent<Player>();
+        
         if (player == null) return;
-
         if (roomType == RoomType.DamageTrap) GetComponent<DamageTrap>().ActivateTrap(player);
         if (roomType == RoomType.DoorTrap) GetComponent<DoorTrap>().ActivateTrap(this);
     }
 
     public void OpenDoors() {
-        foreach (GameObject door in doors) {
-            if (door != null) door.SetActive(false);
-        }
+        SetRoomDoorsActive(false);
     }
 
     public void CloseDoors() {
+        SetRoomDoorsActive(true);
+    }
+
+    private void SetRoomDoorsActive(bool _state) {
         foreach (GameObject door in doors) {
-            if (door != null) door.SetActive(true);
+            if (door != null) door.SetActive(_state);
         }
     }
 }

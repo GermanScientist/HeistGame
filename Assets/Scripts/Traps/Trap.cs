@@ -10,10 +10,8 @@ public abstract class Trap : MonoBehaviour {
     }
 
     public virtual void ActivateTrap(Player _player) {
-        Debug.Log("Activated a traip");
     }
 
     public virtual void ActivateTrap(Room _room) {
-        Debug.Log("Activated a traip");
     }
 }

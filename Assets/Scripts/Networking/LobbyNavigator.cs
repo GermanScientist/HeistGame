@@ -45,7 +45,6 @@ public class LobbyNavigator : MonoBehaviourPunCallbacks {
 
         int lobbyNumber = roomCount + 1;
         PhotonNetwork.CreateRoom("Lobby " + lobbyNumber, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
-        Debug.Log("Room created: Lobby " + lobbyNumber);
     }
 
     public void Return() {

@@ -161,7 +161,6 @@ public abstract class Player : Actor {
             if (target.tag == "Player") {
                 if(target.GetPhotonView() != null) target.GetPhotonView().RPC("TakeDamage", RpcTarget.All, 10);
             }
-            Debug.Log(hit.transform.name);
         }
     }
 }

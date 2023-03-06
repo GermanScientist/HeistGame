@@ -49,7 +49,6 @@ public class Launcher : MonoBehaviourPunCallbacks {
     public override void OnDisconnected(DisconnectCause cause) {
         ShowProgressionPanel(false);
         DisconnectButton(connectButton);
-        Debug.LogWarningFormat("OnDisconnected() was called by PUN with reason {0}", cause);
     }
 
     private void ShowProgressionPanel(bool _showProgression) {
