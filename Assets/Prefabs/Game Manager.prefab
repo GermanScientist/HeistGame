@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7122fafaecabd014080334808b8b8729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rooms: []
+  currentPlayer: {fileID: 0}
