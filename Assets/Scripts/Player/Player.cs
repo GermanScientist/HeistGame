@@ -13,6 +13,8 @@ public abstract class Player : Actor {
     private Slider healthbar;
     private Slider staminabar;
 
+    private GameManager gameManager;
+
     [Header("Player camera values")]
     [SerializeField] private float sensitivity = 100;
     [SerializeField] private float cameraClamp = 85f;
@@ -21,10 +23,12 @@ public abstract class Player : Actor {
         base.Awake();
         if(photonView.IsMine) cameraTransform = GameObject.Find("Main Camera").transform;
         if(photonView.IsMine) cameraContainerTransform = transform.Find("MainCameraPosition");
-        Debug.Log(cameraTransform);
 
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         healthbar = GameObject.Find("Healthbar").GetComponent<Slider>();
         staminabar = GameObject.Find("Staminabar").GetComponent<Slider>();
+
+        if (photonView.IsMine) gameManager.currentPlayer = this;
     }
 
     protected override void Start() {
