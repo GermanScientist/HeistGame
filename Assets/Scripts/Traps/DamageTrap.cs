@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageTrap : Trap {
-    public override void ActivateTrap(Player _player) {
+    public override void ActivateTrap(Room _room, Player _player) {
+        base.ActivateTrap(_room, _player);
         if (gameManager == null || _player == null) return;
         if (gameManager.currentPlayer == _player) _player.TakeDamage(10);
     }

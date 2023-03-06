@@ -7,19 +7,21 @@ public class Room : MonoBehaviour {
     private enum RoomType { Empty, DamageTrap, DoorTrap, SecuritySystem, Vault }
     [SerializeField] private RoomType roomType = RoomType.Empty;
     [SerializeField] private GameObject[] doors;
+    [SerializeField] private GameObject centerPiece;
 
     private void Awake() {
         if (roomType == RoomType.DamageTrap) gameObject.AddComponent<DamageTrap>();
         if (roomType == RoomType.DoorTrap) gameObject.AddComponent<DoorTrap>();
 
         OpenDoors();
+        ShowCenterPiece(false);
     }
 
     public void OnTriggerEnter(Collider _other) {
         Player player = _other.GetComponent<Player>();
-        
         if (player == null) return;
-        if (roomType == RoomType.DamageTrap) GetComponent<DamageTrap>().ActivateTrap(player);
+
+        if (roomType == RoomType.DamageTrap) GetComponent<DamageTrap>().ActivateTrap(this, player);
         if (roomType == RoomType.DoorTrap) GetComponent<DoorTrap>().ActivateTrap(this);
     }
 
@@ -29,6 +31,10 @@ public class Room : MonoBehaviour {
 
     public void CloseDoors() {
         SetRoomDoorsActive(true);
+    }
+
+    public void ShowCenterPiece(bool _state) {
+        centerPiece.SetActive(_state);
     }
 
     private void SetRoomDoorsActive(bool _state) {

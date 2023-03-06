@@ -9,9 +9,11 @@ public abstract class Trap : MonoBehaviour {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    public virtual void ActivateTrap(Player _player) {
+    public virtual void ActivateTrap(Room _room, Player _player) {
+        _room.ShowCenterPiece(true);
     }
 
     public virtual void ActivateTrap(Room _room) {
+        _room.ShowCenterPiece(true);
     }
 }
