@@ -12,10 +12,7 @@ public class Room : MonoBehaviour {
     private void Awake() {
         ShowCenterPiece(false);
 
-        if (roomType == RoomType.DamageTrap) gameObject.AddComponent<DamageTrap>();
-        if (roomType == RoomType.DoorTrap) gameObject.AddComponent<DoorTrap>();
-        if (roomType == RoomType.Vault) ShowCenterPiece(true);
-        if (roomType == RoomType.SecuritySystem) ShowCenterPiece(true);
+        AssignComponentsBasedOnType();
 
         OpenDoors();
     }
@@ -26,6 +23,14 @@ public class Room : MonoBehaviour {
 
         if (roomType == RoomType.DamageTrap) GetComponent<DamageTrap>().ActivateTrap(this, player);
         if (roomType == RoomType.DoorTrap) GetComponent<DoorTrap>().ActivateTrap(this);
+    }
+
+    public void OnTriggerStay(Collider _other) {
+        if (roomType == RoomType.SecuritySystem) 
+            GetComponent<SecuritySystem>().UpdateObjective(_other.GetComponent<Player>());
+        
+        if (roomType == RoomType.Vault) 
+            GetComponent<Vault>().UpdateObjective(_other.GetComponent<Player>());
     }
 
     public void OpenDoors() {
@@ -43,6 +48,20 @@ public class Room : MonoBehaviour {
     private void SetRoomDoorsActive(bool _state) {
         foreach (GameObject door in doors) {
             if (door != null) door.SetActive(_state);
+        }
+    }
+
+    private void AssignComponentsBasedOnType() {
+        if (roomType == RoomType.DamageTrap) gameObject.AddComponent<DamageTrap>();
+        if (roomType == RoomType.DoorTrap) gameObject.AddComponent<DoorTrap>();
+        
+        if (roomType == RoomType.Vault) {
+            Vault currentVault = gameObject.AddComponent<Vault>();
+            currentVault.InitializeObjective(this);
+        }
+        if (roomType == RoomType.SecuritySystem) {
+            SecuritySystem currentSecuritySystem = gameObject.AddComponent<SecuritySystem>();
+            currentSecuritySystem.InitializeObjective(this);
         }
     }
 }
