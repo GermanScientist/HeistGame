@@ -10,11 +10,14 @@ public class Room : MonoBehaviour {
     [SerializeField] private GameObject centerPiece;
 
     private void Awake() {
+        ShowCenterPiece(false);
+
         if (roomType == RoomType.DamageTrap) gameObject.AddComponent<DamageTrap>();
         if (roomType == RoomType.DoorTrap) gameObject.AddComponent<DoorTrap>();
+        if (roomType == RoomType.Vault) ShowCenterPiece(true);
+        if (roomType == RoomType.SecuritySystem) ShowCenterPiece(true);
 
         OpenDoors();
-        ShowCenterPiece(false);
     }
 
     public void OnTriggerEnter(Collider _other) {
