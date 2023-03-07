@@ -26,6 +26,7 @@ public class Room : MonoBehaviour {
 
     public void OnTriggerStay(Collider _other) {
         Player player = _other.GetComponent<Player>();
+        if (roomMission == null) EmptyRoomUpdate();
         if (player == null || roomMission == null) return;
 
         roomMission.UpdateRoomMission(player);
@@ -46,6 +47,13 @@ public class Room : MonoBehaviour {
     private void SetRoomDoorsActive(bool _state) {
         foreach (GameObject door in doors) {
             if (door != null) door.SetActive(_state);
+        }
+    }
+
+    private void EmptyRoomUpdate() {
+        if(Input.GetKeyDown(KeyCode.E)) {
+            roomMission = gameObject.AddComponent<DoorTrap>();
+            roomMission.InitializeRoomMission(this);
         }
     }
 }
