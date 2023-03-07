@@ -14,19 +14,19 @@ public class Room : MonoBehaviour {
         ShowCenterPiece(false);
         OpenDoors();
 
-        roomMission.InitializeRoomMission(this);
+        if (roomMission != null) roomMission.InitializeRoomMission(this);
     }
 
     public void OnTriggerEnter(Collider _other) {
         Player player = _other.GetComponent<Player>();
-        if (player == null) return;
+        if (player == null || roomMission == null) return;
 
         roomMission.ActivateRoomMission(player);
     }
 
     public void OnTriggerStay(Collider _other) {
         Player player = _other.GetComponent<Player>();
-        if (player == null) return;
+        if (player == null || roomMission == null) return;
 
         roomMission.UpdateRoomMission(player);
     }
