@@ -399,7 +399,6 @@ GameObject:
   - component: {fileID: 2052820876264525112}
   - component: {fileID: 2052820876264525115}
   - component: {fileID: 2052820876264525113}
-  - component: {fileID: 2052820876264525108}
   m_Layer: 0
   m_Name: RoomEmpty
   m_TagString: Room
@@ -458,18 +457,6 @@ MonoBehaviour:
   - {fileID: 2052820874994832299}
   - {fileID: 2052820875057932642}
   centerPiece: {fileID: 2052820876275891278}
---- !u!114 &2052820876264525108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052820876264525114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad643d4aff763b848a1a03336323635a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2052820876275891278
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +470,7 @@ GameObject:
   - component: {fileID: 2052820876275891277}
   - component: {fileID: 2052820876275891276}
   m_Layer: 0
-  m_Name: DoorTrapCenter
+  m_Name: EmptyTrapCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

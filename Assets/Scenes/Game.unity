@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.287, g: 2260.461, b: 3278.2383, a: 1}
+  m_IndirectSpecularColor: {r: 2161.579, g: 2265.4883, b: 3288.6445, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3764,11 +3764,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RoomEmpty
-      objectReference: {fileID: 0}
-    - target: {fileID: 2052820876275891278, guid: eb7113ee4e2a58e45b739011dc12349e,
-        type: 3}
-      propertyPath: m_Name
-      value: EmptyTrapCenter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb7113ee4e2a58e45b739011dc12349e, type: 3}
