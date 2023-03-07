@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SecuritySystem : Objective {
-    public override void UpdateObjective(Player _player) {
-        base.UpdateObjective(_player);
+    public override void InitializeRoomMission(Room _room) {
+        base.InitializeRoomMission(_room);
+        currentRoom.ShowCenterPiece(true);
     }
 }

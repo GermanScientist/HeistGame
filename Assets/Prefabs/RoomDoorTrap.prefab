@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 265641090026392921}
   - component: {fileID: 265641090026392922}
   - component: {fileID: 265641090026392920}
+  - component: {fileID: 265641089656254197}
   m_Layer: 0
   m_Name: RoomDoorTrap
   m_TagString: Room
@@ -548,10 +549,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e849cf78777d724286db8ec1a132765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomType: 2
   doors:
   - {fileID: 265641088913898698}
   - {fileID: 265641088425749507}
   - {fileID: 265641088874140618}
   - {fileID: 265641088819144963}
   centerPiece: {fileID: 265641090020523055}
+--- !u!114 &265641089656254197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265641090026392923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1363e3c5745c8fa489f4cfeee4e32ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

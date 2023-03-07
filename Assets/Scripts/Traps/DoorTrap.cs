@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorTrap : Trap {
-    public override void ActivateTrap(Room _room) {
-        base.ActivateTrap(_room);
+    public override void ActivateRoomMission(Player _player) {
+        base.ActivateRoomMission(_player);
 
-        if (_room == null) return;
-        _room.CloseDoors();
+        currentRoom.CloseDoors();
     }
 }

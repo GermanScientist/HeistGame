@@ -4,33 +4,31 @@ using UnityEngine;
 using Photon.Realtime;
 
 public class Room : MonoBehaviour {
-    private enum RoomType { Empty, DamageTrap, DoorTrap, SecuritySystem, Vault }
-    [SerializeField] private RoomType roomType = RoomType.Empty;
+    private RoomMission roomMission;
     [SerializeField] private GameObject[] doors;
     [SerializeField] private GameObject centerPiece;
 
     private void Awake() {
+        roomMission = GetComponent<RoomMission>();
+
         ShowCenterPiece(false);
-
-        AssignComponentsBasedOnType();
-
         OpenDoors();
+
+        roomMission.InitializeRoomMission(this);
     }
 
     public void OnTriggerEnter(Collider _other) {
         Player player = _other.GetComponent<Player>();
         if (player == null) return;
 
-        if (roomType == RoomType.DamageTrap) GetComponent<DamageTrap>().ActivateTrap(this, player);
-        if (roomType == RoomType.DoorTrap) GetComponent<DoorTrap>().ActivateTrap(this);
+        roomMission.ActivateRoomMission(player);
     }
 
     public void OnTriggerStay(Collider _other) {
-        if (roomType == RoomType.SecuritySystem) 
-            GetComponent<SecuritySystem>().UpdateObjective(_other.GetComponent<Player>());
-        
-        if (roomType == RoomType.Vault) 
-            GetComponent<Vault>().UpdateObjective(_other.GetComponent<Player>());
+        Player player = _other.GetComponent<Player>();
+        if (player == null) return;
+
+        roomMission.UpdateRoomMission(player);
     }
 
     public void OpenDoors() {
@@ -48,20 +46,6 @@ public class Room : MonoBehaviour {
     private void SetRoomDoorsActive(bool _state) {
         foreach (GameObject door in doors) {
             if (door != null) door.SetActive(_state);
-        }
-    }
-
-    private void AssignComponentsBasedOnType() {
-        if (roomType == RoomType.DamageTrap) gameObject.AddComponent<DamageTrap>();
-        if (roomType == RoomType.DoorTrap) gameObject.AddComponent<DoorTrap>();
-        
-        if (roomType == RoomType.Vault) {
-            Vault currentVault = gameObject.AddComponent<Vault>();
-            currentVault.InitializeObjective(this);
-        }
-        if (roomType == RoomType.SecuritySystem) {
-            SecuritySystem currentSecuritySystem = gameObject.AddComponent<SecuritySystem>();
-            currentSecuritySystem.InitializeObjective(this);
         }
     }
 }

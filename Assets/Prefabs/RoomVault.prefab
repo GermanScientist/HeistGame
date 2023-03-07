@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 4558211931774232270}
   - component: {fileID: 4558211931774232271}
   - component: {fileID: 4558211931774232268}
+  - component: {fileID: 1947138620424393877}
   m_Layer: 0
   m_Name: RoomVault
   m_TagString: Room
@@ -548,10 +549,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e849cf78777d724286db8ec1a132765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomType: 4
   doors:
   - {fileID: 4558211931574364546}
   - {fileID: 4558211931431062690}
   - {fileID: 4558211929806545669}
   - {fileID: 4558211931180967244}
   centerPiece: {fileID: 4558211930026297739}
+--- !u!114 &1947138620424393877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4558211931774232269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b76b5a939de25d42904a973a17896bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
