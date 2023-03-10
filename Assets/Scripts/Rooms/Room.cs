@@ -33,21 +33,27 @@ public class Room : MonoBehaviour {
     }
 
     public void OpenDoors() {
-        SetRoomDoorsActive(false);
+        foreach (GameObject door in doors) {
+            if (door == null) continue;
+
+            Animator animator = door.transform.parent.GetComponent<Animator>();
+            animator.ResetTrigger("CloseDoor");
+            animator.SetTrigger("OpenDoor");
+        }
     }
 
     public void CloseDoors() {
-        SetRoomDoorsActive(true);
+        foreach (GameObject door in doors) {
+            if (door == null) continue;
+
+            Animator animator = door.transform.parent.GetComponent<Animator>();
+            animator.ResetTrigger("CloseDoor");
+            animator.SetTrigger("OpenDoor");
+        }
     }
 
     public void ShowCenterPiece(bool _state) {
         centerPiece.SetActive(_state);
-    }
-
-    private void SetRoomDoorsActive(bool _state) {
-        foreach (GameObject door in doors) {
-            if (door != null) door.SetActive(_state);
-        }
     }
 
     private void EmptyRoomUpdate() {
