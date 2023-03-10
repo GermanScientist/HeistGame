@@ -54,6 +54,11 @@ public class Room : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.E)) {
             roomMission = gameObject.AddComponent<DoorTrap>();
             roomMission.InitializeRoomMission(this);
+        } 
+        
+        if (Input.GetKeyDown(KeyCode.F)) {
+            roomMission = gameObject.AddComponent<DamageTrap>();
+            roomMission.InitializeRoomMission(this);
         }
     }
 }
