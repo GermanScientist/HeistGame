@@ -47,8 +47,8 @@ public class Room : MonoBehaviour {
             if (door == null) continue;
 
             Animator animator = door.transform.parent.GetComponent<Animator>();
-            animator.ResetTrigger("CloseDoor");
-            animator.SetTrigger("OpenDoor");
+            animator.ResetTrigger("OpenDoor");
+            animator.SetTrigger("CloseDoor");
         }
     }
 

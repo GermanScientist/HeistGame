@@ -2,7 +2,6 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
-using TMPro;
 using System.Collections.Generic;
 
 public class LobbyNavigator : MonoBehaviourPunCallbacks {

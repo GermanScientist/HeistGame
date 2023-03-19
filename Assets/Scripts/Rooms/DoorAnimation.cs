@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class dooraniumatio : MonoBehaviour
+public class DoorAnimation : MonoBehaviour
 {
     private Animator animator;
     // Start is called before the first frame update
