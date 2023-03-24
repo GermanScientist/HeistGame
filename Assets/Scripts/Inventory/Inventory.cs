@@ -6,6 +6,8 @@ public class Inventory {
     private List<Item> items;
     private System.Type selectedItem;
 
+    public System.Type SelectedItem { get { return selectedItem; } }
+
     public void SelectItem(System.Type _type) {
         selectedItem = _type;
     }

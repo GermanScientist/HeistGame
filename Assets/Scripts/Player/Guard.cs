@@ -7,6 +7,15 @@ public class Guard : Player {
     [Header("Guard stats")]
     [SerializeField] private float currency = 10;
 
+    protected override void Start() {
+        base.Start();
+
+        inventory.AddItem(new Weapon());
+        inventory.AddItem(new RoomTrapItem());
+        inventory.AddItem(new RoomTrapItem());
+        inventory.AddItem(new DamageTrapItem());
+    }
+
     protected override void Update() {
         base.Update();
     }

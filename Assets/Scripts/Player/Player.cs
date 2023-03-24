@@ -14,6 +14,7 @@ public abstract class Player : Actor {
     private Slider staminabar;
 
     private GameManager gameManager;
+    protected Inventory inventory;
 
     [Header("Player camera values")]
     [SerializeField] private float sensitivity = 100;
@@ -27,6 +28,8 @@ public abstract class Player : Actor {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         healthbar = GameObject.Find("Healthbar").GetComponent<Slider>();
         staminabar = GameObject.Find("Staminabar").GetComponent<Slider>();
+
+        inventory = new Inventory();
 
         if (photonView.IsMine) gameManager.currentPlayer = this;
     }
