@@ -20,6 +20,8 @@ public abstract class Player : Actor {
     [SerializeField] private float sensitivity = 100;
     [SerializeField] private float cameraClamp = 85f;
 
+    public Inventory PlayerInventory { get { return inventory; } }
+
     protected override void Awake() {
         base.Awake();
         if(photonView.IsMine) cameraTransform = GameObject.Find("Main Camera").transform;
