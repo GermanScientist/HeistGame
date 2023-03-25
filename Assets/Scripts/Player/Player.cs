@@ -14,10 +14,11 @@ public abstract class Player : Actor {
     private Slider staminabar;
 
     private GameManager gameManager;
-    protected Inventory inventory;
+    protected bool canMove;
+    [SerializeField] protected Inventory inventory;
 
     [Header("Player camera values")]
-    [SerializeField] private float sensitivity = 100;
+    [SerializeField] protected float sensitivity = 100;
     [SerializeField] private float cameraClamp = 85f;
 
     public Inventory PlayerInventory { get { return inventory; } }
@@ -32,6 +33,8 @@ public abstract class Player : Actor {
         staminabar = GameObject.Find("Staminabar").GetComponent<Slider>();
 
         inventory = new Inventory();
+
+        canMove = true;
 
         if (photonView.IsMine) gameManager.currentPlayer = this;
     }
@@ -78,19 +81,20 @@ public abstract class Player : Actor {
         float y = Input.GetAxis("Vertical");
 
         //Apply the movement direction to the player character
+        if(!canMove) return;
         Vector3 moveDirection = transform.right * x + transform.forward * y;
         characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
     }
 
     //Lock the mouse to the center of the screen
-    private void LockMouse() {
+    protected void LockMouse() {
         if (!photonView.IsMine) return;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    private void UnlockMouse() {
+    protected void UnlockMouse() {
         if (!photonView.IsMine) return;
 
         Cursor.lockState = CursorLockMode.Confined;

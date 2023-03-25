@@ -1,18 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory {
-    private List<Item> items;
+    [SerializeField] private List<Item> items;
     private System.Type selectedItem;
 
     public System.Type SelectedItem { get { return selectedItem; } }
+
+    public Inventory() {
+        items = new List<Item>();
+    }
 
     public void SelectItem(System.Type _type) {
         selectedItem = _type;
     }
 
     public void AddItem(Item _item) {
+        Debug.Log(items);
+        Debug.Log(_item);
         if (_item == null) return;
         items.Add(_item);
     }
