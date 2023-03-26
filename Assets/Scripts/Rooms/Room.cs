@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Realtime;
+using Photon.Pun;
 
 public class Room : MonoBehaviour {
     private RoomMission roomMission;
@@ -12,7 +12,7 @@ public class Room : MonoBehaviour {
         roomMission = GetComponent<RoomMission>();
 
         ShowCenterPiece(false);
-        OpenDoors();
+        SendOpenDoorRequest();
 
         if (roomMission != null) roomMission.InitializeRoomMission(this);
     }
@@ -32,6 +32,17 @@ public class Room : MonoBehaviour {
         roomMission.UpdateRoomMission(player);
     }
 
+    public void SendOpenDoorRequest() {
+        if (gameObject.GetPhotonView() == null) return; 
+        gameObject.GetPhotonView().RPC("OpenDoors", RpcTarget.All);
+    }
+
+    public void SendCloseDoorRequest() {
+        if (gameObject.GetPhotonView() == null) return;
+        gameObject.GetPhotonView().RPC("CloseDoors", RpcTarget.All);
+    }
+
+    [PunRPC]
     public void OpenDoors() {
         foreach (GameObject door in doors) {
             if (door == null) continue;
@@ -42,6 +53,7 @@ public class Room : MonoBehaviour {
         }
     }
 
+    [PunRPC]
     public void CloseDoors() {
         foreach (GameObject door in doors) {
             if (door == null) continue;
@@ -57,12 +69,12 @@ public class Room : MonoBehaviour {
     }
 
     private void EmptyRoomUpdate() {
-        if(Input.GetKeyDown(KeyCode.E)) {
+        if(Input.GetKeyDown(KeyCode.F)) {
             roomMission = gameObject.AddComponent<DoorTrap>();
             roomMission.InitializeRoomMission(this);
         } 
         
-        if (Input.GetKeyDown(KeyCode.F)) {
+        if (Input.GetKeyDown(KeyCode.G)) {
             roomMission = gameObject.AddComponent<DamageTrap>();
             roomMission.InitializeRoomMission(this);
         }

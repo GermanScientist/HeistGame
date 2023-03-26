@@ -5,6 +5,6 @@ using UnityEngine;
 public class DoorTrap : Trap {
     public override void ActivateRoomMission(Player _player) {
         base.ActivateRoomMission(_player);
-        currentRoom.CloseDoors();
+        currentRoom.SendCloseDoorRequest();
     }
 }

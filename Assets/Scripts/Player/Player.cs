@@ -47,8 +47,10 @@ public abstract class Player : Actor {
     protected override void Update() {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.K)) TakeDamage(10);
         if (Input.GetMouseButtonDown(0)) HitPlayer();
+        if (Input.GetKeyDown(KeyCode.K)) TakeDamage(10);
+
+        if (Input.GetKeyDown(KeyCode.E)) OpenDoor();
     }
 
     //Rotate the actor using the player's mouse input
@@ -161,8 +163,6 @@ public abstract class Player : Actor {
     protected virtual void HitPlayer() {
         if (!photonView.IsMine) return;
 
-        Debug.DrawRay(cameraContainerTransform.position, cameraContainerTransform.forward);
-
         RaycastHit hit;
         if (Physics.Raycast(cameraContainerTransform.position, cameraContainerTransform.forward, out hit, 100)) {
             GameObject target = hit.transform.gameObject;
@@ -171,5 +171,32 @@ public abstract class Player : Actor {
                 if(target.GetPhotonView() != null) target.GetPhotonView().RPC("TakeDamage", RpcTarget.All, 10);
             }
         }
+    }
+
+    [PunRPC]
+    private void OpenDoorRequest(Animator _animator) {
+        _animator.ResetTrigger("CloseDoor");
+        _animator.SetTrigger("OpenDoor");
+    }
+
+    private void OpenDoor() {
+        GameObject door = GetRaycastGO().tag == "Door" ? GetRaycastGO() : null;
+        if (door == null) return;
+
+        Animator animator = door.transform.parent.GetComponent<Animator>();
+        if (animator == null) return;
+
+        animator.ResetTrigger("CloseDoor");
+        animator.SetTrigger("OpenDoor");
+
+        //if (gameObject.GetPhotonView() != null) 
+        //    gameObject.GetPhotonView().RPC("OpenDoorRequest", RpcTarget.All, animator);
+    }
+
+    protected GameObject GetRaycastGO() {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraContainerTransform.position, cameraContainerTransform.forward, out hit, 100))
+            return hit.transform.gameObject;
+        return null;
     }
 }
