@@ -2,34 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class Guard : Player {
     [Header("Guard stats")]
     [SerializeField] private float currency = 10;
 
-    private GameObject storeCanavs;
+    private GameObject storeCanvas;
+    private TMP_Text currencyText;
+    private TMP_Text damageText;
+    private TMP_Text doorText;
 
     [SerializeField] private bool shouldOpenStore;
 
     public float Currency { get { return currency; } }
-    public GameObject StoreCanvas { get { return storeCanavs; } }
+    public GameObject StoreCanvas { get { return storeCanvas; } }
 
     protected override void Awake() {
         base.Awake();
 
         shouldOpenStore = true;
-        storeCanavs = GameObject.Find("StoreCanvas");
+        storeCanvas = GameObject.Find("StoreCanvas");
+
+        if (photonView.IsMine) {
+            Destroy(GameObject.Find("IntruderCanvas"));
+        }
+
+        currencyText = GameObject.Find("CurrencyText").GetComponent<TMP_Text>();
+        damageText = GameObject.Find("DamageText").GetComponent<TMP_Text>();
+        doorText = GameObject.Find("DoorText").GetComponent<TMP_Text>();
     }
 
     protected override void Start() {
         base.Start();
 
-        Debug.Log(inventory);
-
         inventory.AddItem(new Weapon());
         inventory.AddItem(new RoomTrapItem());
         inventory.AddItem(new RoomTrapItem());
         inventory.AddItem(new DamageTrapItem());
+
+        UpdateUI();
     }
 
     protected override void Update() {
@@ -40,7 +52,6 @@ public class Guard : Player {
             if (!shouldOpenStore) CloseStore();
             shouldOpenStore = !shouldOpenStore;
         }
-            
     }
 
     //Set the guard's currency
@@ -64,15 +75,31 @@ public class Guard : Player {
         currency += _value;
     }
 
+    public void UpdateUI() {
+        if (!photonView.IsMine) return;
+
+        int roomTrapAmount = inventory.CheckItemAmount(new RoomTrapItem().GetType());
+        int damageTrapAmount = inventory.CheckItemAmount(new DamageTrapItem().GetType());
+
+        currencyText.text = "$" + currency.ToString();
+        doorText.text = roomTrapAmount.ToString();
+        damageText.text = damageTrapAmount.ToString();
+
+    }
+
     public void OpenStore() {
-        storeCanavs.SetActive(true);
+        if (!photonView.IsMine) return;
+
+        storeCanvas.SetActive(true);
         UnlockMouse();
         sensitivity = 0;
         canMove = false;
     }
 
     public void CloseStore() {
-        storeCanavs.SetActive(false);
+        if (!photonView.IsMine) return;
+
+        storeCanvas.SetActive(false);
         LockMouse();
         sensitivity = 100;
         canMove = true;

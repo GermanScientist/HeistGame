@@ -7,29 +7,30 @@ public class Room : MonoBehaviour {
     private RoomMission roomMission;
     [SerializeField] private GameObject[] doors;
     [SerializeField] private GameObject centerPiece;
+    [SerializeField] private bool hasEntrance;
+
+    public bool HasEntrance { get { return hasEntrance; } }
 
     private void Awake() {
         roomMission = GetComponent<RoomMission>();
 
         ShowCenterPiece(false);
-        SendOpenDoorRequest();
 
         if (roomMission != null) roomMission.InitializeRoomMission(this);
     }
 
     public void OnTriggerEnter(Collider _other) {
-        Player player = _other.GetComponent<Player>();
-        if (player == null || roomMission == null) return;
+        Intruder intruder = _other.GetComponent<Intruder>();
+        if (intruder == null || roomMission == null) return;
 
-        roomMission.ActivateRoomMission(player);
+        roomMission.ActivateRoomMission(intruder);
     }
 
     public void OnTriggerStay(Collider _other) {
-        Player player = _other.GetComponent<Player>();
-        if (roomMission == null) EmptyRoomUpdate();
-        if (player == null || roomMission == null) return;
-
-        roomMission.UpdateRoomMission(player);
+        Intruder intruder= _other.GetComponent<Intruder>();
+        if (roomMission == null) EmptyRoomUpdate(_other);
+        if (intruder == null || roomMission == null) return;
+        if (_other.gameObject.tag == "Intruder") roomMission.UpdateRoomMission(intruder);
     }
 
     public void SendOpenDoorRequest() {
@@ -48,6 +49,7 @@ public class Room : MonoBehaviour {
             if (door == null) continue;
 
             Animator animator = door.transform.parent.GetComponent<Animator>();
+            if (animator == null) return;
             animator.ResetTrigger("CloseDoor");
             animator.SetTrigger("OpenDoor");
         }
@@ -59,6 +61,7 @@ public class Room : MonoBehaviour {
             if (door == null) continue;
 
             Animator animator = door.transform.parent.GetComponent<Animator>();
+            if (animator == null) return;
             animator.ResetTrigger("OpenDoor");
             animator.SetTrigger("CloseDoor");
         }
@@ -68,15 +71,35 @@ public class Room : MonoBehaviour {
         centerPiece.SetActive(_state);
     }
 
-    private void EmptyRoomUpdate() {
+    private void EmptyRoomUpdate(Collider _collider) {
+        if (_collider.gameObject.tag != "Guard") return;
+        Guard guard = _collider.GetComponent<Guard>();
+        
         if(Input.GetKeyDown(KeyCode.F)) {
-            roomMission = gameObject.AddComponent<DoorTrap>();
-            roomMission.InitializeRoomMission(this);
+            int doorTrapAmount = guard.PlayerInventory.CheckItemAmount(new RoomTrapItem().GetType()); ;
+            if(doorTrapAmount >= 1) {
+                guard.PlayerInventory.RemoveItem(new RoomTrapItem().GetType());
+                guard.UpdateUI();
+                gameObject.GetPhotonView().RPC("CreateDoorTrap", RpcTarget.All);
+            }
         } 
         
         if (Input.GetKeyDown(KeyCode.G)) {
-            roomMission = gameObject.AddComponent<DamageTrap>();
-            roomMission.InitializeRoomMission(this);
+            guard.PlayerInventory.RemoveItem(new DamageTrapItem().GetType());
+            guard.UpdateUI();
+            gameObject.GetPhotonView().RPC("CreateDamageTrap", RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void CreateDoorTrap() {
+        roomMission = gameObject.AddComponent<DoorTrap>();
+        roomMission.InitializeRoomMission(this);
+    }
+
+    [PunRPC]
+    private void CreateDamageTrap() {
+        roomMission = gameObject.AddComponent<DamageTrap>();
+        roomMission.InitializeRoomMission(this);
     }
 }

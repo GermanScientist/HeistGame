@@ -14,15 +14,15 @@ public abstract class RoomMission : MonoBehaviour {
         currentRoom = _room;
     }
 
-    public virtual void ActivateRoomMission(Player _player) {
+    public virtual void ActivateRoomMission(Intruder intruder) {
 
     }
 
-    public virtual void UpdateRoomMission(Player _player) {
+    public virtual void UpdateRoomMission(Intruder _intruder) {
 
     }
 
-    public virtual void EndRoomMission(Player _player) {
+    public virtual void EndRoomMission(Intruder intruder) {
 
     }
 }

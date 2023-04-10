@@ -24,9 +24,13 @@ public class Inventory {
         items.Add(_item);
     }
 
-    public void RemoveItem(Item _item) {
-        if (_item == null) return;
-        items.Remove(_item);
+    public void RemoveItem(System.Type _type) {
+        foreach (Item _item in items) {
+            if (_item.GetType() == _type) {
+                items.Remove(_item);
+                return;
+            }   
+        }
     }
 
     public int CheckItemAmount(System.Type _type) {

@@ -48,9 +48,6 @@ public abstract class Player : Actor {
         base.Update();
 
         if (Input.GetMouseButtonDown(0)) HitPlayer();
-        if (Input.GetKeyDown(KeyCode.K)) TakeDamage(10);
-
-        if (Input.GetKeyDown(KeyCode.E)) OpenDoor();
     }
 
     //Rotate the actor using the player's mouse input
@@ -167,7 +164,7 @@ public abstract class Player : Actor {
         if (Physics.Raycast(cameraContainerTransform.position, cameraContainerTransform.forward, out hit, 100)) {
             GameObject target = hit.transform.gameObject;
             
-            if (target.tag == "Player") {
+            if (target.tag == "Intruder" || target.tag == "Guard") {
                 if(target.GetPhotonView() != null) target.GetPhotonView().RPC("TakeDamage", RpcTarget.All, 10);
             }
         }
