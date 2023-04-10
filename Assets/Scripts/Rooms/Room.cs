@@ -33,6 +33,12 @@ public class Room : MonoBehaviour {
         if (_other.gameObject.tag == "Intruder") roomMission.UpdateRoomMission(intruder);
     }
 
+    public void OnTriggerExit(Collider _other) {
+        Intruder intruder = _other.GetComponent<Intruder>();
+        if (intruder == null || roomMission == null) return;
+        if (_other.gameObject.tag == "Intruder") roomMission.EndRoomMission(intruder);
+    }
+
     public void SendOpenDoorRequest() {
         if (gameObject.GetPhotonView() == null) return; 
         gameObject.GetPhotonView().RPC("OpenDoors", RpcTarget.All);

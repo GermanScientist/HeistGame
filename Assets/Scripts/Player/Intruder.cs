@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Intruder : Player {
     private GameObject intruderCanvas;
+
+    public GameObject IntruderCanvas { get { return intruderCanvas; } }
+
     protected override void Start() {
         base.Start();
         intruderCanvas = GameObject.Find("IntruderCanvas");
