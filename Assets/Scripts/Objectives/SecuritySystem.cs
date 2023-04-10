@@ -13,14 +13,15 @@ public class SecuritySystem : Objective {
         base.InitializeRoomMission(_room);
         currentRoom.ShowCenterPiece(true);
 
-        timerText = GameObject.Find("ObjectiveTimer").GetComponent<TMP_Text>();
-        timerText.gameObject.SetActive(false);
+        GameObject objectiveTimerGO = GameObject.Find("ObjectiveTimer");
+        timerText = objectiveTimerGO != null ? objectiveTimerGO.GetComponent<TMP_Text>() : null;
+        SetTextActive(timerText, false);
         remainingTime = objectiveDuration;
     }
 
     public override void ActivateRoomMission(Intruder intruder) {
         base.ActivateRoomMission(intruder);
-        timerText.gameObject.SetActive(true);
+        SetTextActive(timerText, true);
     }
 
     public override void UpdateRoomMission(Intruder _intruder) {
@@ -56,8 +57,13 @@ public class SecuritySystem : Objective {
     }
 
     private void CompleteObjective() {
-        timerText.gameObject.SetActive(false);
+        SetTextActive(timerText, false);
         completed = true;
         gameManager.photonView.RPC("CompleteObjective", RpcTarget.All);
+    }
+
+    private void SetTextActive(TMP_Text _text, bool _state) {
+        if (_text == null) return;
+        _text.gameObject.SetActive(_state);
     }
 }

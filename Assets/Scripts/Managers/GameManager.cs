@@ -8,7 +8,7 @@ using TMPro;
 public class GameManager : MonoBehaviourPunCallbacks {
     [SerializeField] private List<Room> rooms;
     [SerializeField] private List<GameObject> playerPrefabs;
-    private TMP_Text countdownTimer;
+    [SerializeField] private TMP_Text countdownTimer;
     private PhotonView myPhotonView;
     [SerializeField] private float startingTime = 300; //5 minutes
     [SerializeField] private float startWaitDuration = 30; //30 seconds
@@ -25,21 +25,14 @@ public class GameManager : MonoBehaviourPunCallbacks {
     private void Awake() {
         remainingTime = startingTime + startWaitDuration;
         myPhotonView = GetComponent<PhotonView>();
-        countdownTimer = GameObject.Find("Timer").GetComponent<TMP_Text>();
 
-        GameObject[] roomGOs = GameObject.FindGameObjectsWithTag("Room");
-        foreach (GameObject roomGO in roomGOs) {
-            Room currentRoom = roomGO.GetComponent<Room>();
-            if (currentRoom != null) {
-                rooms.Add(currentRoom);
-                if (!currentRoom.HasEntrance) currentRoom.SendOpenDoorRequest();
-            }
-        }
-        
+        OpenAllDoors();
         SpawnPlayers();
     }
 
     private void Start() {
+        FindCountdownTimer();
+
         timerIsRunning = true;
     }
 
@@ -47,7 +40,13 @@ public class GameManager : MonoBehaviourPunCallbacks {
         KeepTrackOfGameTime();
     }
 
+    private void FindCountdownTimer() {
+        GameObject timerGO = GameObject.Find("Timer");
+        countdownTimer = timerGO != null ? timerGO.GetComponent<TMP_Text>() : null;
+    }
+
     private void KeepTrackOfGameTime() {
+        if(countdownTimer == null) FindCountdownTimer();
 
         if (!timerIsRunning) return;
 
@@ -59,7 +58,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
             remainingTime -= Time.deltaTime;
 
             //30 seconds have passed
-            if (remainingTime > startingTime - startWaitDuration) {
+            if (remainingTime > startingTime) {
                 minutes = 0;
             } else {
                 if(!gameStarted) {
@@ -92,12 +91,14 @@ public class GameManager : MonoBehaviourPunCallbacks {
     private void FinishGame() {
         gameCompleted = true;
 
-        if(objectivesCompleted >= 4) {
+        if (objectivesCompleted >= 4) {
             Debug.Log("Intruders have won");
         } else {
             Debug.Log("Guard has won");
         }
-        
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         LeaveRoom();
     }
 
@@ -108,6 +109,17 @@ public class GameManager : MonoBehaviourPunCallbacks {
             PhotonNetwork.Instantiate(this.playerPrefabs[0].name, new Vector3(Random.Range(30, 45), 2f, Random.Range(-45, 45)), Quaternion.identity, 0);
         } else { //Otherwise spawn a guard
             PhotonNetwork.Instantiate(this.playerPrefabs[1].name, new Vector3(Random.Range(30, 45), 2f, Random.Range(-45, 45)), Quaternion.identity, 0);
+        }
+    }
+
+    private void OpenAllDoors() {
+        GameObject[] roomGOs = GameObject.FindGameObjectsWithTag("Room");
+        foreach (GameObject roomGO in roomGOs) {
+            Room currentRoom = roomGO.GetComponent<Room>();
+            if (currentRoom != null) {
+                rooms.Add(currentRoom);
+                if (!currentRoom.HasEntrance) currentRoom.SendOpenDoorRequest();
+            }
         }
     }
 
