@@ -47,7 +47,7 @@ public class SecuritySystem : Objective {
         if(remainingTime > 0) {
             float minutes;
             float seconds;
-            gameManager.CalculateTime(out minutes, out seconds);
+            gameManager.CalculateTime(out minutes, out seconds, remainingTime);
             gameManager.DisplayTime(timerText, minutes, seconds);
 
             remainingTime -= Time.deltaTime;

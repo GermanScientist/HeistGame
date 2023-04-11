@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
     [SerializeField] private List<Room> rooms;
     [SerializeField] private List<GameObject> playerPrefabs;
     [SerializeField] private TMP_Text countdownTimer;
-    private PhotonView myPhotonView;
+    [SerializeField] private TMP_Text objectiveCounter;
     [SerializeField] private float startingTime = 300; //5 minutes
     [SerializeField] private float startWaitDuration = 30; //30 seconds
+
+    private PhotonView myPhotonView;
     private float remainingTime;
     private bool timerIsRunning;
     private bool gameStarted;
@@ -53,7 +55,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
         if (remainingTime > 0) {
             float minutes;
             float seconds;
-            CalculateTime(out minutes, out seconds);
+            CalculateTime(out minutes, out seconds, remainingTime);
 
             remainingTime -= Time.deltaTime;
 
@@ -79,9 +81,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
         }
     }
 
-    public void CalculateTime(out float _minutes, out float _seconds) {
-        _minutes = Mathf.FloorToInt(remainingTime / 60);
-        _seconds = Mathf.FloorToInt(remainingTime % 60);
+    public void CalculateTime(out float _minutes, out float _seconds, float _remainingTime) {
+        _minutes = Mathf.FloorToInt(_remainingTime / 60);
+        _seconds = Mathf.FloorToInt(_remainingTime % 60);
     }
 
     public void DisplayTime(TMP_Text _text, float _minutes, float _seconds) {
@@ -132,7 +134,13 @@ public class GameManager : MonoBehaviourPunCallbacks {
     
     [PunRPC]
     public void CompleteObjective() {
-        objectivesCompleted++; 
+        if(objectiveCounter == null) {
+            GameObject objectiveTextGO = GameObject.Find("ObjectiveCounterText");
+            objectiveCounter = objectiveTextGO != null ? objectiveTextGO.GetComponent<TMP_Text>() : null;
+        }
+
+        objectivesCompleted++;
+        objectiveCounter.text = objectivesCompleted + "/4";
     }
 
     public override void OnLeftRoom() {
